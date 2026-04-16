@@ -1,0 +1,41 @@
+﻿<Window x:Class="Notes.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Notes"
+        xmlns:cntrl="clr-namespace:Notes.View.Controls"
+        xmlns:vm="clr-namespace:Notes.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="460" 
+        Width="525"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow">
+    
+    <Window.Resources>
+        <vm:MainVM x:Key="MainVM"/>
+        <DataTemplate x:Key="NoteTemplate">
+            <cntrl:NoteControl/>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" 
+                Width="70"
+                Height="20"
+                HorizontalAlignment="Left"
+                Content="Добавить"
+                Command="{Binding Path=AddNoteCommand, Source={StaticResource MainVM}}"/>
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl ItemsSource="{Binding Path=Notes, Source={StaticResource MainVM}}"
+                          ItemTemplate="{StaticResource NoteTemplate}"/>
+        </ScrollViewer>
+    </Grid>
+</Window>
